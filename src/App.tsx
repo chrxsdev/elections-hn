@@ -3,23 +3,16 @@ import { RefreshCw, Loader2 } from 'lucide-react';
 import { useElectionData } from './hooks/useElectionData';
 import { CandidateCard } from './components/CandidateCard';
 import { DifferenceSection } from './components/DifferenceSection';
+import { VoteRecordsSection } from './components/VoteRecordsSection';
 import { formatTimestamp } from './utils/dateUtils';
 import { config } from './config/env';
 import './App.css';
 
 function App() {
   const [refreshInterval, setRefreshInterval] = useState(config.defaultRefreshInterval);
-  
-  const {
-    loading,
-    refreshing,
-    error,
-    firstPlace,
-    secondPlace,
-    voteDifference,
-    timestamp,
-    refresh,
-  } = useElectionData(refreshInterval);
+
+  const { loading, refreshing, error, firstPlace, secondPlace, voteDifference, timestamp, voteRecords, refresh } =
+    useElectionData(refreshInterval);
 
   return (
     <div className='container'>
@@ -48,18 +41,15 @@ function App() {
         <div className='results show'>
           <div className='candidates-row'>
             <CandidateCard candidate={firstPlace} position='first' />
-            
+
             <DifferenceSection difference={voteDifference} />
-            
+
             <CandidateCard candidate={secondPlace} position='second' />
           </div>
 
           <div className='timestamp'>Datos actualizados: {formatTimestamp(timestamp)}</div>
 
-          <div 
-            className='winner-banner'
-            style={{ '--party-color': firstPlace.parpo_color } as React.CSSProperties}
-          >
+          <div className='winner-banner' style={{ '--party-color': firstPlace.parpo_color } as React.CSSProperties}>
             <div className='winner-label'>Ganador Actual</div>
             <div className='winner-name'>{firstPlace.cddto_nombres}</div>
             <div className='winner-party'>{firstPlace.parpo_nombre}</div>
@@ -68,9 +58,9 @@ function App() {
           <div className='controls-container'>
             <div className='interval-selector'>
               <label htmlFor='refresh-interval'>Actualización Automática:</label>
-              <select 
+              <select
                 id='refresh-interval'
-                value={refreshInterval} 
+                value={refreshInterval}
                 onChange={(e) => setRefreshInterval(Number(e.target.value))}
                 className='interval-select'
               >
@@ -92,6 +82,7 @@ function App() {
               {refreshing ? 'Actualizando...' : 'Actualizar Datos'}
             </button>
           </div>
+          {voteRecords && <VoteRecordsSection records={voteRecords} />}
         </div>
       )}
     </div>

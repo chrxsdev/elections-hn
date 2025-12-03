@@ -28,3 +28,13 @@ export interface ApiPayload {
   pesto: string;
   mesa: number;
 }
+
+export interface VoteRecords {
+  total: number;
+  publicadas: number;
+  espera: number;
+  verificacion: number;
+  inconsistencias: number;
+  correctas: number;
+  pendientesVerificacionVisual: number;
+}

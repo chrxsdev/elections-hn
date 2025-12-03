@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { fetchElectionData } from '../services/electionService';
-import type { Candidate } from '../types/election';
+import { fetchElectionData, fetchVoteRecords } from '../services/electionService';
+import type { Candidate, VoteRecords } from '../types/election';
 
 interface ElectionDataState {
   loading: boolean;
@@ -10,6 +10,7 @@ interface ElectionDataState {
   secondPlace: Candidate | null;
   voteDifference: number;
   timestamp: string;
+  voteRecords: VoteRecords | null;
 }
 
 interface UseElectionDataReturn extends ElectionDataState {
@@ -25,6 +26,7 @@ export const useElectionData = (refreshIntervalMinutes: number = 3): UseElection
     secondPlace: null,
     voteDifference: 0,
     timestamp: '',
+    voteRecords: null,
   });
 
   const isMountedRef = useRef(true);
@@ -39,7 +41,10 @@ export const useElectionData = (refreshIntervalMinutes: number = 3): UseElection
     }));
 
     try {
-      const data = await fetchElectionData();
+      const [data, records] = await Promise.all([
+        fetchElectionData(),
+        fetchVoteRecords(),
+      ]);
       
       if (!isMountedRef.current) return;
 
@@ -68,6 +73,7 @@ export const useElectionData = (refreshIntervalMinutes: number = 3): UseElection
         secondPlace: second,
         voteDifference: difference,
         timestamp: fetchTime,
+        voteRecords: records,
       });
     } catch (err) {
       if (!isMountedRef.current) return;
