@@ -18,6 +18,7 @@ interface UseElectionDataReturn extends ElectionDataState {
 }
 
 export const useElectionData = (refreshIntervalMinutes: number = 3): UseElectionDataReturn => {
+  console.log(refreshIntervalMinutes)
   const [state, setState] = useState<ElectionDataState>({
     loading: true,
     refreshing: false,

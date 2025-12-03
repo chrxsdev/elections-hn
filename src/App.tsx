@@ -28,10 +28,7 @@ function App() {
 
       {error && (
         <div className='error'>
-          <strong>Error al cargar los datos:</strong>
-          <br />
-          {error}
-          <br />
+          <strong>Error al cargar los datos desde el CNE:</strong>
           <br />
           <small>Por favor verifica tu conexión a internet e intenta de nuevo.</small>
         </div>
@@ -64,16 +61,11 @@ function App() {
                 onChange={(e) => setRefreshInterval(Number(e.target.value))}
                 className='interval-select'
               >
-                <option value={1}>Cada 1 minuto</option>
-                <option value={2}>Cada 2 minutos</option>
-                <option value={3}>Cada 3 minutos</option>
-                <option value={4}>Cada 4 minutos</option>
-                <option value={5}>Cada 5 minutos</option>
-                <option value={6}>Cada 6 minutos</option>
-                <option value={7}>Cada 7 minutos</option>
-                <option value={8}>Cada 8 minutos</option>
-                <option value={9}>Cada 9 minutos</option>
-                <option value={10}>Cada 10 minutos</option>
+                {Array.from({ length: 10 }, (_, i) => i).map((i) => (
+                  <option key={i} value={i + 1}>
+                    Cada {i + 1} minuto{i + 1 > 1 ? 's' : ''}
+                  </option>
+                ))}
               </select>
             </div>
 
