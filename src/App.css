@@ -1,0 +1,363 @@
+.container {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.08);
+  padding: 48px;
+  max-width: 1400px;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 40px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 20px;
+}
+
+.loader-icon {
+  color: #3b82f6;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  text-align: center;
+  color: #6b7280;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.results {
+  display: none;
+}
+
+.results.show {
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.candidates-row {
+  display: grid;
+  grid-template-columns: 2fr auto 2fr;
+  gap: 32px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.candidate {
+  background: white;
+  border: 2px solid #e5e7eb;
+  padding: 28px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  animation: slideIn 0.6s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.candidate::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--party-color, #9ca3af);
+  transition: width 0.3s ease;
+}
+
+.candidate:hover {
+  border-color: var(--party-color, #9ca3af);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.candidate:hover::before {
+  width: 10px;
+}
+
+.candidate.first {
+  border-color: rgba(0, 0, 0, 0.12);
+  background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(249,250,251,1) 100%);
+}
+
+.candidate.second {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.candidate-header {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.candidate-images {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.candidate-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 3px solid var(--party-color, #e5e7eb);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.party-logo {
+  width: 80px;
+  height: 40px;
+  object-fit: contain;
+  background: white;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.candidate-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.candidate-position {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--party-color, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+
+.candidate-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+}
+
+.candidate-party {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.candidate-votes {
+  font-size: 40px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -1px;
+  text-align: right;
+  padding-top: 8px;
+  border-top: 2px solid #f3f4f6;
+}
+
+.difference-section {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: white;
+  padding: 32px 24px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+  animation: slideIn 0.6s ease-out 0.2s both;
+}
+
+.difference-label {
+  font-size: 13px;
+  margin-bottom: 12px;
+  opacity: 0.75;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.difference-value {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+.timestamp {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 13px;
+  margin-top: 24px;
+  font-weight: 500;
+}
+
+.refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 24px auto 0;
+  padding: 14px 32px;
+  background: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.refresh-btn:hover {
+  background: #334155;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.refresh-btn:hover svg {
+  animation: spin 0.6s ease-in-out;
+}
+
+.refresh-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.refresh-btn:disabled:hover {
+  transform: none;
+}
+
+.refresh-btn svg.spinning {
+  animation: spin 1s linear infinite;
+}
+
+.refresh-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 968px) {
+  .candidates-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .difference-section {
+    order: 2;
+  }
+
+  .candidate.first {
+    order: 1;
+  }
+
+  .candidate.second {
+    order: 3;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 24px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .candidate {
+    padding: 20px;
+  }
+
+  .candidate-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .candidate-images {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .candidate-votes {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .difference-value {
+    font-size: 40px;
+  }
+
+  .difference-section {
+    min-width: auto;
+    width: 100%;
+  }
+}
