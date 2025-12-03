@@ -116,6 +116,15 @@ function App() {
 
           <div className='timestamp'>Datos actualizados: {formatTimestamp(timestamp)}</div>
 
+          <div 
+            className='winner-banner'
+            style={{ '--party-color': firstPlace.parpo_color } as React.CSSProperties}
+          >
+            <div className='winner-label'>Ganador Actual</div>
+            <div className='winner-name'>{firstPlace.cddto_nombres}</div>
+            <div className='winner-party'>{firstPlace.parpo_nombre}</div>
+          </div>
+
           <button className='refresh-btn' onClick={handleRefresh} disabled={refreshing}>
             <RefreshCw size={18} className={refreshing ? 'spinning' : ''} />
             {refreshing ? 'Actualizando...' : 'Actualizar Datos'}

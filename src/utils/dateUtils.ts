@@ -1,9 +1,9 @@
 export const formatTimestamp = (timestamp: string): string => {
-  if (!timestamp) return 'Unknown';
+  if (!timestamp) return 'Desconocido';
   
   try {
     const date = new Date(timestamp);
-    return date.toLocaleString('en-US', {
+    return date.toLocaleString('es-ES', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
