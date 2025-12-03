@@ -1,85 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { RefreshCw, Loader2 } from 'lucide-react';
-import { fetchElectionData } from './services/electionService';
+import { useElectionData } from './hooks/useElectionData';
 import { CandidateCard } from './components/CandidateCard';
 import { DifferenceSection } from './components/DifferenceSection';
 import { formatTimestamp } from './utils/dateUtils';
+import { config } from './config/env';
 import './App.css';
-import type { Candidate } from './types/election';
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [firstPlace, setFirstPlace] = useState<Candidate | null>(null);
-  const [secondPlace, setSecondPlace] = useState<Candidate | null>(null);
-  const [voteDifference, setVoteDifference] = useState<number>(0);
-  const [timestamp, setTimestamp] = useState<string>('');
-
-  useEffect(() => {
-    const loadElectionData = async () => {
-      try {
-        const data = await fetchElectionData();
-        const fetchTime = new Date().toISOString();
-
-        // Normalize and validate vote counts
-        const normalizedCandidates = data.candidatos.map(candidate => ({
-          ...candidate,
-          votos: Number(candidate.votos) || 0
-        }));
-
-        // Sort candidates by votes (descending order)
-        const sortedCandidates = [...normalizedCandidates].sort((a, b) => b.votos - a.votos);
-
-        const first = sortedCandidates[0];
-        const second = sortedCandidates[1];
-        const difference = first.votos - second.votos;
-
-        setFirstPlace(first);
-        setSecondPlace(second);
-        setVoteDifference(difference);
-        setTimestamp(fetchTime);
-        setLoading(false);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Ocurrió un error');
-        setLoading(false);
-      }
-    };
-
-    loadElectionData();
-  }, []);
-
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    setError(null);
-
-    try {
-      const data = await fetchElectionData();
-      const fetchTime = new Date().toISOString();
-
-      // Normalize and validate vote counts
-      const normalizedCandidates = data.candidatos.map(candidate => ({
-        ...candidate,
-        votos: Number(candidate.votos) || 0
-      }));
-
-      // Sort candidates by votes (descending order)
-      const sortedCandidates = [...normalizedCandidates].sort((a, b) => b.votos - a.votos);
-
-      const first = sortedCandidates[0];
-      const second = sortedCandidates[1];
-      const difference = first.votos - second.votos;
-
-      setFirstPlace(first);
-      setSecondPlace(second);
-      setVoteDifference(difference);
-      setTimestamp(fetchTime);
-      setRefreshing(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ocurrió un error');
-      setRefreshing(false);
-    }
-  };
+  const [refreshInterval, setRefreshInterval] = useState(config.defaultRefreshInterval);
+  
+  const {
+    loading,
+    refreshing,
+    error,
+    firstPlace,
+    secondPlace,
+    voteDifference,
+    timestamp,
+    refresh,
+  } = useElectionData(refreshInterval);
 
   return (
     <div className='container'>
@@ -125,10 +65,33 @@ function App() {
             <div className='winner-party'>{firstPlace.parpo_nombre}</div>
           </div>
 
-          <button className='refresh-btn' onClick={handleRefresh} disabled={refreshing}>
-            <RefreshCw size={18} className={refreshing ? 'spinning' : ''} />
-            {refreshing ? 'Actualizando...' : 'Actualizar Datos'}
-          </button>
+          <div className='controls-container'>
+            <div className='interval-selector'>
+              <label htmlFor='refresh-interval'>Actualización Automática:</label>
+              <select 
+                id='refresh-interval'
+                value={refreshInterval} 
+                onChange={(e) => setRefreshInterval(Number(e.target.value))}
+                className='interval-select'
+              >
+                <option value={1}>Cada 1 minuto</option>
+                <option value={2}>Cada 2 minutos</option>
+                <option value={3}>Cada 3 minutos</option>
+                <option value={4}>Cada 4 minutos</option>
+                <option value={5}>Cada 5 minutos</option>
+                <option value={6}>Cada 6 minutos</option>
+                <option value={7}>Cada 7 minutos</option>
+                <option value={8}>Cada 8 minutos</option>
+                <option value={9}>Cada 9 minutos</option>
+                <option value={10}>Cada 10 minutos</option>
+              </select>
+            </div>
+
+            <button className='refresh-btn' onClick={refresh} disabled={refreshing}>
+              <RefreshCw size={18} className={refreshing ? 'spinning' : ''} />
+              {refreshing ? 'Actualizando...' : 'Actualizar Datos'}
+            </button>
+          </div>
         </div>
       )}
     </div>
