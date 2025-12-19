@@ -8,6 +8,7 @@ interface ElectionDataState {
   error: string | null;
   firstPlace: Candidate | null;
   secondPlace: Candidate | null;
+  allCandidates: Candidate[];
   voteDifference: number;
   timestamp: string;
   voteRecords: VoteRecords | null;
@@ -18,13 +19,13 @@ interface UseElectionDataReturn extends ElectionDataState {
 }
 
 export const useElectionData = (refreshIntervalMinutes: number = 3): UseElectionDataReturn => {
-  console.log(refreshIntervalMinutes)
   const [state, setState] = useState<ElectionDataState>({
     loading: true,
     refreshing: false,
     error: null,
     firstPlace: null,
     secondPlace: null,
+    allCandidates: [],
     voteDifference: 0,
     timestamp: '',
     voteRecords: null,
@@ -72,6 +73,7 @@ export const useElectionData = (refreshIntervalMinutes: number = 3): UseElection
         error: null,
         firstPlace: first,
         secondPlace: second,
+        allCandidates: sortedCandidates,
         voteDifference: difference,
         timestamp: fetchTime,
         voteRecords: records,
