@@ -21,7 +21,6 @@ h1 {
 .subtitle {
   text-align: center;
   color: #6b7280;
-  margin-bottom: 40px;
   font-size: 15px;
   font-weight: 500;
 }
@@ -254,7 +253,7 @@ h1 {
 .winner-banner {
   background: var(--party-color, #1e293b);
   color: white;
-  padding: 24px;
+  padding: 14px;
   margin: 24px 0;
   border-radius: 16px;
   text-align: center;
@@ -273,7 +272,7 @@ h1 {
 }
 
 .winner-label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -283,7 +282,7 @@ h1 {
 }
 
 .winner-name {
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 800;
   margin-bottom: 4px;
   letter-spacing: -0.5px;
@@ -291,7 +290,7 @@ h1 {
 }
 
 .winner-party {
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 600;
   opacity: 0.85;
   position: relative;

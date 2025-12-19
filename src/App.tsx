@@ -41,6 +41,11 @@ function App() {
 
       {!loading && !error && firstPlace && secondPlace && (
         <div className='results show'>
+          <div className='winner-banner' style={{ '--party-color': firstPlace.parpo_color } as React.CSSProperties}>
+            <div className='winner-label'>Ganador Actual</div>
+            <div className='winner-name'>{firstPlace.cddto_nombres}</div>
+            <div className='winner-party'>{firstPlace.parpo_nombre}</div>
+          </div>
           <div className='candidates-row'>
             <CandidateCard candidate={firstPlace} position='first' percentage={getPercentage(firstPlace.votos, totalVotes)} />
             <DifferenceSection difference={voteDifference} />
@@ -83,11 +88,7 @@ function App() {
           </div>
           <div className='timestamp'>Datos actualizados: {formatTimestamp(timestamp)}</div>
 
-          <div className='winner-banner' style={{ '--party-color': firstPlace.parpo_color } as React.CSSProperties}>
-            <div className='winner-label'>Ganador Actual</div>
-            <div className='winner-name'>{firstPlace.cddto_nombres}</div>
-            <div className='winner-party'>{firstPlace.parpo_nombre}</div>
-          </div>
+
           {voteRecords && <VoteRecordsSection records={voteRecords} />}
         </div>
       )}
